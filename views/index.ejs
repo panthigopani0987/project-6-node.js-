@@ -1,0 +1,102 @@
+<style>
+    *{
+        margin: 0 auto;
+        box-sizing: border-box;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 18px;
+    }
+    table,tr,th,td{
+        border: 2px solid #000;
+        border-collapse: collapse;
+        padding: 10px;
+        margin: 30px auto;
+    }
+    input{
+        outline: none;
+        padding: 10px;
+        width: 100%;
+    }
+    .button,button{
+        padding: 10px;
+        font-size: 20px;
+        background-color: transparent;
+    }
+    a button{
+        background-color: dodgerblue;
+        color: aliceblue;
+        border: none;
+        margin: 20px;
+        border-radius: 5px;
+    }
+    .blog{
+        width: 350px;
+        height: 450px;
+        background-color: rgba(110, 104, 104, 0.467);
+        text-align: center;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .blogContain{
+        padding: 10px;
+    }
+    .blogImg img{
+        width: 350px;
+        height: 250px;
+        object-fit: cover;
+        object-position: center;
+    }
+    .blogContain p{
+        margin: 10px;
+    }
+    .blogBox{
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px;
+    }
+</style>
+<form action="/AddBlog" method="post" enctype="multipart/form-data">
+    <table>
+        <input type="hidden" value="<%= single.id %>" name="editid">
+        <tr>
+            <td>Blog Title:-</td>
+            <td><input type="text" name="name" value="<%= single.name %>"></td>
+        </tr>
+        <tr>
+            <td>Blog Description:-</td>
+            <td><input type="text" name="description" value="<%= single.description %>"></td>
+        </tr>
+        <tr>
+            <td>Blog Image :-</td>
+            <td><input type="file" name="image"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <% if(single) { %>
+                    <input type="submit" value="Edit" class="button">
+                <% } else{ %>
+                    <input type="submit" class="button">
+                <% } %>
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="blogBox">
+    <% data.map((val)=>{
+        const {id,name,image,description} = val %>
+            <div class="blog">
+                <div class="blogImg">
+                    <img src="<%= image %>" width="300">
+                </div>
+                <div class="blogContain">
+                    <h3>
+                        <%= name %>
+                    </h3>
+                    <p>
+                        <%= description %>
+                    </p>
+                    <a href="/DeleteBlog?id=<%=id%>"><button>Delete</button></a>
+                    <a href="/EditBlog?id=<%=id%>"><button>Edit</button></a>
+                </div>
+            </div>
+    <%})%>
+</div>
